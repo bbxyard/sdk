@@ -37,7 +37,7 @@ function automake()
 {
     tarfile=`basename $1`
     name=${tarfile%.tar.*}
-    infofile=$INFO_DIR/$name.xml
+    infofile=$INFO_DIR/$name.lst
     if [ -f "$infofile" ]; then
         return
     fi
@@ -61,7 +61,7 @@ function automake()
             #make uninstall
             rm -rvf "$imgdir"
         fi
-        echo "# build: $(DATE)" >> "$infofile"
+        #echo "# build: $(DATE)" >> "$infofile"
       popd
       rm -rvf "$dst"
     fi
@@ -81,7 +81,7 @@ function main()
     automake2 htmlcxx-0.84.tar.bz2
     #automake2 gflags-2.1.1.tar.gz
     #automake2 boost_1_55_0.tar.bz2
-    mv $SDK_HOME/lib/*.${DYEXT} "$DYLIB_DIR"
+    mv $SDK_HOME/lib/*.${DYEXT}* "$DYLIB_DIR"
 }
 
 main
