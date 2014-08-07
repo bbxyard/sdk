@@ -103,7 +103,7 @@ function install_env()
 
 function main()
 {
-    automake2 protobuf-2.5.0.tar.gz 
+    automake2 protobuf-2.5.0.tar.gz --enable-shared=no 
     automake2 apr-1.5.1.tar.bz2
     automake2 apr-util-1.5.3.tar.bz2 "--with-apr=$SDK_HOME"
     automake2 curl-7.37.1.tar.bz2
