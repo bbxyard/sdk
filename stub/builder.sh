@@ -33,6 +33,13 @@ DYLIB_DIR=$SDK_HOME/${DYLIB}
 BUILD_DIR=$HOME/tmp/build
 IMG_DIR=$HOME/tmp/dist
 
+# sdk env file
+SDK_ENV=$SDK_HOME/sdk.env
+
+
+# *******************************************************
+# function 
+# *******************************************************
 function automake()
 {
     tarfile=`basename $1`
@@ -72,6 +79,28 @@ function automake2()
     automake "$1" "$BUILD_DIR" "$2"
 }
 
+function gen_env()
+{
+cat << EOF > "$SDK_ENV"
+export SDK_HOME=$SDK_HOME
+export PATH=\$SDK_HOME/bin:\$PATH
+export LD_LIBRARY_PATH=\$SDK_HOME/lib:\$SDK_HOME/dylib:\$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=\$SDK_HOME/lib/pkgconfig:\$PKG_CONFIG_PATH 
+EOF
+}
+
+function install_env()
+{
+    bashconf=$HOME/.bash_profile
+    envfname=$(basename "$SDK_ENV")
+    tmpfile=$$.tmp
+    touch "$bashconf"
+    # unix not support -i 
+    sed "/${envfname}/d" "$bashconf" > $tmpfile && mv -f $tmpfile "$bashconf"
+    [ -f "$tmpfile" ] && rm -f "$tmpfile"
+    echo "source $SDK_ENV" >> "$bashconf"
+}
+
 function main()
 {
     automake2 protobuf-2.5.0.tar.gz 
@@ -82,6 +111,8 @@ function main()
     #automake2 gflags-2.1.1.tar.gz
     #automake2 boost_1_55_0.tar.bz2
     mv $SDK_HOME/lib/*.${DYEXT}* "$DYLIB_DIR"
+    gen_env
+    install_env
 }
 
 main
