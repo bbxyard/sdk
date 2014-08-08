@@ -36,6 +36,11 @@ IMG_DIR=$HOME/tmp/dist
 # sdk env file
 SDK_ENV=$SDK_HOME/sdk.env
 
+# bash conf (.bash_profile or .bashrc)
+USER_BASH_CONF=$HOME/.bash_profile
+if [ -f "$HOME/.bashrc" ]; then
+    USER_BASH_CONF=$HOME/.bashrc
+fi
 
 # *******************************************************
 # function 
@@ -84,14 +89,14 @@ function gen_env()
 cat << EOF > "$SDK_ENV"
 export SDK_HOME=$SDK_HOME
 export PATH=\$SDK_HOME/bin:\$PATH
-export LD_LIBRARY_PATH=\$SDK_HOME/lib:\$SDK_HOME/dylib:\$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=\$SDK_HOME/lib:\$SDK_HOME/$DYLIB:\$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=\$SDK_HOME/lib/pkgconfig:\$PKG_CONFIG_PATH 
 EOF
 }
 
 function install_env()
 {
-    bashconf=$HOME/.bash_profile
+    bashconf=$USER_BASH_CONF
     envfname=$(basename "$SDK_ENV")
     tmpfile=$$.tmp
     touch "$bashconf"
@@ -104,13 +109,13 @@ function install_env()
 function main()
 {
     automake2 protobuf-2.5.0.tar.gz --enable-shared=no 
-    automake2 apr-1.5.1.tar.bz2
-    automake2 apr-util-1.5.3.tar.bz2 "--with-apr=$SDK_HOME"
-    automake2 curl-7.37.1.tar.bz2
-    automake2 htmlcxx-0.84.tar.bz2
+    automake2 apr-1.5.1.tar.bz2 --enable-shared=no
+    automake2 apr-util-1.5.3.tar.bz2 "--with-apr=$SDK_HOME" --enable-shared=no
+    automake2 curl-7.37.1.tar.bz2 --enable-shared=no
+    automake2 htmlcxx-0.84.tar.bz2 --enable-shared=no
     #automake2 gflags-2.1.1.tar.gz
     #automake2 boost_1_55_0.tar.bz2
-    mv $SDK_HOME/lib/*.${DYEXT}* "$DYLIB_DIR"
+    mv $SDK_HOME/lib/*.${DYEXT}* "$DYLIB_DIR" 2>/dev/null
     gen_env
     install_env
 }
