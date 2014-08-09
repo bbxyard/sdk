@@ -111,7 +111,7 @@ function main()
     automake2 protobuf-2.5.0.tar.gz --enable-shared=no 
     automake2 apr-1.5.1.tar.bz2 --enable-shared=no
     automake2 apr-util-1.5.3.tar.bz2 "--with-apr=$SDK_HOME" --enable-shared=no
-    automake2 curl-7.37.1.tar.bz2 --enable-shared=no
+    #automake2 curl-7.37.1.tar.bz2 --enable-shared=no #this depends openssl! reserved!
     automake2 htmlcxx-0.84.tar.bz2 --enable-shared=no
     #automake2 gflags-2.1.1.tar.gz
     #automake2 boost_1_55_0.tar.bz2
