@@ -21,8 +21,8 @@
 #include <string>
 #include <iostream>
 
-#include "apr-1/apr.h"
-#include "apr-1/apr_pools.h"
+#include "apr.h"
+#include "apr_pools.h"
 
 
 /* 
