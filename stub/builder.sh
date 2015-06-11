@@ -116,6 +116,7 @@ function main()
     automake2 libunwind-1.1.tar.gz  --enable-shared=no
     #automake2 gperftools-2.1.tar.gz "--with-libunwind=$SDK_HOME --enable-shared=no"
     automake2 gperftools-2.1.tar.gz  "--enable-shared=no --enable-frame-pointers"
+    automake2 mongo-c-driver-1.x.tar.bz2 "--enable-static=yes --enable-shared=no"
     #automake2 gflags-2.1.1.tar.gz
     #automake2 boost_1_55_0.tar.bz2
     mv $SDK_HOME/lib/*.${DYEXT}* "$DYLIB_DIR" 2>/dev/null
