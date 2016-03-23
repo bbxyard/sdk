@@ -125,4 +125,9 @@ function main()
     install_env
 }
 
+function main0()
+{
+    automake2  libevent-2.0.22-stable.tar.gz "--enable-shared=no" 
+}
+
 main
